@@ -8,20 +8,17 @@ public class CuPrinter {
 
     public static String cuPrint(){
 	String TableName = "";
-	String[] tableNameExtractor;
-        // creates an input stream for the file to be parsed
+	String[] tableNameExtractor;//used to manipulate the string before storing it in TableName
         try{
 		FileInputStream in = new FileInputStream("/home/oscar14/test.java");
 		System.out.println("Shit worked yo");
-		// parse the file
 		CompilationUnit cu = JavaParser.parse(in);
-      		// prints the resulting compilation unit to default system output
-		String[] tokens = cu.toString().split("@");
+		String[] tokens = cu.toString().split("@");//split the string by @ symbols used to denote annotations
 		for(int i=0;i<tokens.length;i++){
 			if(tokens[i].indexOf("Table")!=-1){
 				tableNameExtractor=tokens[i].split("\\(");
-				tableNameExtractor=tableNameExtractor[1].split("\\)");
-				tableNameExtractor=tableNameExtractor[0].split("\"");
+				tableNameExtractor=tableNameExtractor[1].split("\\)");//table name is wrapped in brackets, remove brackets
+				tableNameExtractor=tableNameExtractor[0].split("\"");//table name is wrapped in quotes, remove quotes
 				tableNameExtractor=tableNameExtractor[1].split("\"");
 				TableName=tableNameExtractor[0];
 			}
