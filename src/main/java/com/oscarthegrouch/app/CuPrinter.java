@@ -13,7 +13,7 @@ public class CuPrinter {
 
         try{
 		FileInputStream in = new FileInputStream("/home/oscar14/test.java");
-		System.out.println("Shit worked yo");
+		System.out.println("File successfully accessed");
 		CompilationUnit cu = JavaParser.parse(in);
 		String[] tokens = cu.toString().split("@");//split the string by @ symbols used to denote annotations
 
@@ -40,7 +40,7 @@ public class CuPrinter {
 	}
 	catch(FileNotFoundException err){
 		System.out.println("File not found");
-		return "Shit didn't work yo";
+		return "";
 	}
     }
 }
