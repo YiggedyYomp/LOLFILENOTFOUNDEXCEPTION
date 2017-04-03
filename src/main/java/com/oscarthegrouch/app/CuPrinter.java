@@ -10,6 +10,7 @@ public class CuPrinter {
 
 	String TableName = "";
 	String[] tableNameExtractor;//used to manipulate the string before storing it in TableName
+	String[] referencedTableNameExtractor;//used to manipulate the string before printing it to the screen. Might need a variable to store these depending on we store the output. Just printing to the screen for now
 
         try{
 		FileInputStream in = new FileInputStream("/home/oscar14/test.java");
@@ -28,13 +29,16 @@ public class CuPrinter {
 			}
 		}
 
+		System.out.println("Referenced Table names are: ");
 		//for loop for extracting referenced tables
 		for(int i=0;i<tokens.length;i++){
 			if(tokens[i].indexOf("ManyToOne")!=-1&&tokens[i+1].indexOf("JoinColumn")!=-1){
-				System.out.println(tokens[i+1]);
+				referencedTableNameExtractor=tokens[i+1].split(";");
+				referencedTableNameExtractor=referencedTableNameExtractor[referencedTableNameExtractor.length-2].split(" ");				
+				System.out.println(referencedTableNameExtractor[referencedTableNameExtractor.length-1]);
 			}
 		}
-		System.out.println("END OF JoinColumns FOUND");
+		System.out.println("END OF REFERENCED TABLE NAMES");
 		System.out.print("Table Name is: ");
      		return TableName;
 	}
