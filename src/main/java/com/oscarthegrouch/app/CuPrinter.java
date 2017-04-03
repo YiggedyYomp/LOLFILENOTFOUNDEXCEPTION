@@ -30,8 +30,8 @@ public class CuPrinter {
 
 		//for loop for extracting referenced tables
 		for(int i=0;i<tokens.length;i++){
-			if(tokens[i].indexOf("JoinColumn")!=-1){
-				System.out.println(tokens[i]);
+			if(tokens[i].indexOf("ManyToOne")!=-1&&tokens[i+1].indexOf("JoinColumn")!=-1){
+				System.out.println(tokens[i+1]);
 			}
 		}
 		System.out.println("END OF JoinColumns FOUND");
