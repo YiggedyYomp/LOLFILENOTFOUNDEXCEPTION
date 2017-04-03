@@ -7,18 +7,40 @@ import com.github.javaparser.ast.CompilationUnit;
 public class CuPrinter {
 
     public static String cuPrint(){
-        // creates an input stream for the file to be parsed
+
+	String TableName = "";
+	String[] tableNameExtractor;//used to manipulate the string before storing it in TableName
+
         try{
-		FileInputStream in = new FileInputStream("./../../test.java");
-System.out.println("Shit worked yo");
-		// parse the file
+		FileInputStream in = new FileInputStream("/home/oscar14/test.java");
+		System.out.println("File successfuly accessed");
 		CompilationUnit cu = JavaParser.parse(in);
-      		// prints the resulting compilation unit to default system output
-     		return cu.toString();
+		String[] tokens = cu.toString().split("@");//split the string by @ symbols used to denote annotations
+
+		//for loop for extracting table name
+		for(int i=0;i<tokens.length;i++){
+			if(tokens[i].indexOf("Table")!=-1){
+				tableNameExtractor=tokens[i].split("\\(");
+				tableNameExtractor=tableNameExtractor[1].split("\\)");//table name is wrapped in brackets, remove brackets
+				tableNameExtractor=tableNameExtractor[0].split("\"");//table name is wrapped in quotes, remove quotes
+				tableNameExtractor=tableNameExtractor[1].split("\"");
+				TableName=tableNameExtractor[0];
+			}
+		}
+
+		//for loop for extracting referenced tables
+		for(int i=0;i<tokens.length;i++){
+			if(tokens[i].indexOf("ManyToOne")!=-1&&tokens[i+1].indexOf("JoinColumn")!=-1){
+				System.out.println(tokens[i+1]);
+			}
+		}
+		System.out.println("END OF JoinColumns FOUND");
+		System.out.print("Table Name is: ");
+     		return TableName;
 	}
 	catch(FileNotFoundException err){
 		System.out.println("File not found");
-		return "Shit didn't work yo";
+		return "";
 	}
     }
 }

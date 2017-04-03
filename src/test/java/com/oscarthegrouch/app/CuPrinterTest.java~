@@ -5,7 +5,7 @@ public class CuPrinterTest{
 	@Test
 	public void testPrint(){
 	System.out.println("TESTING");
-	CuPrinter.cuPrint();
+	System.out.println(CuPrinter.cuPrint());
 	Assert.assertEquals(1,1);	
 	}
 }
